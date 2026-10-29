@@ -1,0 +1,38 @@
+{"road_geometry": {
+    "radius_horizontal_m": 50,
+    "longitudinal_slope_rad": -0.04,
+    "cross_slope_rad": 0.04
+},
+  "vehicle_parameters": {
+    "mass_kg": 1550,
+    "vehicle_length_m": 4.770,
+    "vehicle_width_m": 1.795,
+    "vehicle_height_m": 1.471,
+    "track_width_m": 1.500,
+    "wheel_center_height_m": 0.325,
+    "aerodynamic_drag_coeff": 0.3,
+    "wheelbase_m": 2.780,
+    "sprung_mass_kg": 1370,
+    "sprung_mass_cog_dist_front_axle": 1.110,
+    "sprung_mass_cog_height": 0.520,
+    "frontal_area_m2": 2.3,
+    "tire_rolling_resistance": 0.015
+  },
+  "environment": {
+    "air_density_kg_m3": 1.293,
+    "gravitational_acceleration_m_s2": 9.81,
+    "pavement_friction_coeffs": [0.01, 0.05, 0.15, 0.20]
+
+},
+  "simulation": {
+    "time_span_s": [0, 10],
+    "initial_speed_m_s": 10,
+    "speed_range_m_s": [0, 20],
+    "accel_range_m_s2": [-3, 3],
+    "grid_resolution": 200,
+    "random_seed": 42,
+    "mu_simulation": 0.01,
+    "commanded_accel_m_s2": -1.5
+  }
+
+}
