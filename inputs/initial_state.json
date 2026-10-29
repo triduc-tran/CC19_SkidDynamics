@@ -26,13 +26,13 @@
 },
   "simulation": {
     "time_span_s": [0, 10],
-    "initial_speed_m_s": 10,
+    "initial_speed_m_s": 3,
     "speed_range_m_s": [0, 20],
-    "accel_range_m_s2": [-3, 3],
+    "accel_range_m_s2": [-2.5, 2.5],
     "grid_resolution": 200,
     "random_seed": 42,
     "mu_simulation": 0.01,
-    "commanded_accel_m_s2": -1.5
+    "commanded_accel_m_s2": 0
   }
 
 }
