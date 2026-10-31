@@ -3,6 +3,8 @@ import json
 from pathlib import Path
 from solvers import run_simulation, compute_safd
 from visualizations.SAFD_plot import plot_safd
+from visualizations.trajectory_plot import plot_trajectories
+
 
 if __name__ == '__main__':
     base_dir = Path(__file__).parent
@@ -26,6 +28,7 @@ if __name__ == '__main__':
         data = compute_safd(mu, parameters)
         safd_results.append(data)
 
+    plot_trajectories(input_path, )
     plot_safd(safd_results, parameters, mu_list)
     print("SAFD plot successfully generated!")
 
