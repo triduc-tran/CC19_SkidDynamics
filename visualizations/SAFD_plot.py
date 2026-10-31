@@ -14,15 +14,25 @@ def plot_safd(safd_results_list, parameters, mu_values):
     """
 
     fig, ax = plt.subplots(figsize=(10,7))
-    colors = plt.cm.coolwarm(np.linspace(0, 1, len(mu_values)))
-    labels = (f"μ = {mu_values[0]:.2f} (black ice)",
-              f"μ = {mu_values[1]:.2f} (wet ice)",
-              f"μ = {mu_values[2]:.2f} (packed ice)",
-              f"μ = {mu_values[3]:.2f} (rough ice)")
-    for (safd_data, color, label) in zip(safd_results_list, colors, labels):
+    colors = plt.cm.coolwarm(np.linspace(0, 0.95, len(mu_values)))
+    mu_names = {"0.01": "(black ice)",
+                "0.05": "(wet ice)",
+                "0.15": "(packed ice)",
+                "0.20": "(rough ice)"}
+
+    highlighted_mu = parameters["simulation"]["highlight_mu"]
+    idx = mu_values.index(highlighted_mu)
+    chosen = safd_results_list[idx]
+
+    for i, (safd_data, color) in enumerate(zip(safd_results_list, colors)):
+        mu = mu_values[i]
+        key = f"{mu:.2f}"
+        name = mu_names.get(key, "")
+        label = f"μ = {key} {name}"
         v_grid = safd_data["v"]
         acceleration_grid = safd_data["a_x"]
         mu_margin = safd_data["mu_margin"]
+
 
         ax.contour(v_grid, acceleration_grid, mu_margin,
                              levels=[0],
@@ -52,18 +62,19 @@ def plot_safd(safd_results_list, parameters, mu_values):
     ax.text(x, y + 0.17, "A'", ha = "center", va = "center", fontsize = 13, fontweight = "bold",
             bbox=dict(boxstyle = "round", facecolor = "white", alpha = 0.7))
 
-    ax.contourf(v_grid, acceleration_grid, mu_margin, levels = [-100, 0, 100], colors = ["lightcoral", "lightgreen"], alpha = 0.3)
+    ax.contourf(chosen["v"], chosen["a_x"], chosen["mu_margin"], levels = [-100, 0, 100], colors = ["lightcoral", "lightgreen"], alpha = 0.3)
     ax.axvline(v_crit, linestyle = "--",color = "turquoise", label = "Critical speed (F_y = 0)")
     ax.plot(v_line, a_coast, linestyle = "--", color = "magenta", label = "Coasting (F_x = 0)")
     ax.set_xlabel("Velocity v (m/s)", fontsize = 12)
     ax.set_ylabel("Longitudinal acceleration a_x (m/s²)", fontsize = 12)
     ax.set_title("Speed - Acceleration Feasible Domain (SAFD)\n on Icy Curved Ramps", fontsize = 14)
     ax.grid(True, linestyle = '--', alpha = 0.5)
-    ax.legend(fontsize=10)
     ax.annotate("SAFD boundary (μ_margin = 0)", xy = (10.8, 0.5), xytext = (12, 1.5), arrowprops = dict(arrowstyle="->"))
-    Patch(facecolor = "lightgreen", alpha = 0.4, label = "Feasible, μ_margin > 0 (μ = 0.20)")
-    Patch(facecolor="lightcoral", alpha=0.4, label="Infeasible, μ_margin < 0 (μ = 0.20)")
-
+    feasible_patch = Patch(facecolor = "lightgreen", alpha = 0.4, label =f"Feasible, μ_margin > 0 (μ = {highlighted_mu:.2f})")
+    infeasible_patch = Patch(facecolor ="lightcoral", alpha = 0.4, label =f"Infeasible, μ_margin < 0 (μ = {highlighted_mu:.2f})")
+    handles, name = ax.get_legend_handles_labels()
+    handles = handles + [feasible_patch, infeasible_patch]
+    ax.legend(handles = handles, fontsize = 10)
 
     output_path = Path(__file__).parent / "safd_plot.png"
     plt.savefig(output_path, dpi = 300, bbox_inches = 'tight')
