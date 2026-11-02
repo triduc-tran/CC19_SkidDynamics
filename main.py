@@ -1,6 +1,9 @@
 import numpy as np
 import json
 from pathlib import Path
+
+import pandas as pd
+
 from solvers import run_simulation, compute_safd
 from visualizations.SAFD_plot import plot_safd
 from visualizations.trajectory_plot import plot_trajectories
@@ -27,10 +30,16 @@ if __name__ == '__main__':
     for mu in mu_list:
         data = compute_safd(mu, parameters)
         safd_results.append(data)
+    inward_df = pd.read_csv(base_dir / "data" / "simulation_results.csv")
+    outward_df = pd.read_csv(base_dir / "data" / "simulation_results.csv")
+    run_data = {"inward": inward_df, "outward": outward_df}
 
-    plot_trajectories(input_path, )
+    print(f"Simulation complete. Results are exported to {output_path}")
+
+    plot_trajectories(run_data, parameters)
+    print("Trajectories plot successfully generated!")
     plot_safd(safd_results, parameters, mu_list)
     print("SAFD plot successfully generated!")
 
-    print(f"Simulation complete. Results are exported to {output_path}")
+
 
