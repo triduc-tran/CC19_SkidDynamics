@@ -21,7 +21,7 @@ def equations_of_motion(t, state, a_x, parameters):
 
     mu = parameters["simulation"]["mu_simulation"]
     m = parameters["vehicle_parameters"]["mass_kg"]
-    theta = parameters["road_geometry"]["longitudinal_slope_rad"]
+    theta = parameters["road_geometry"]["longitudinal_slope_percent"]
 
     f_normal = compute_normal_force(v_x,parameters)
     f_lateral = compute_lateral_force(v_x,parameters)
@@ -69,7 +69,7 @@ def run_simulation(a_x, parameters):
 
     m = parameters["vehicle_parameters"]["mass_kg"]
     g = parameters["environment"]["gravitational_acceleration_m_s2"]
-    theta = parameters["road_geometry"]["longitudinal_slope_rad"]
+    theta = parameters["road_geometry"]["longitudinal_slope_percent"]
 
     kinetic_energy = 0.5 * m * (vx**2 + vy**2)
     height = x * np.sin(theta)

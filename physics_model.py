@@ -10,8 +10,8 @@ def compute_normal_force(v, parameters):
     """
     m = parameters["vehicle_parameters"]["mass_kg"]
     g = parameters["environment"]["gravitational_acceleration_m_s2"]
-    theta = parameters["road_geometry"]["longitudinal_slope_rad"]
-    phi = parameters["road_geometry"]["cross_slope_rad"]
+    theta = parameters["road_geometry"]["longitudinal_slope_percent"]
+    phi = parameters["road_geometry"]["cross_slope_percent"]
     r = parameters["road_geometry"]["radius_horizontal_m"]
 
     f_normal = m*g*np.cos(theta)*np.cos(phi)+m*v**2*np.sin(phi)*np.cos(theta)**2/r
@@ -54,8 +54,8 @@ def compute_lateral_force(v, parameters):
     :return: f_lateral: float - net lateral force (N)
     """
     m = parameters["vehicle_parameters"]["mass_kg"]
-    theta = parameters["road_geometry"]["longitudinal_slope_rad"]
-    phi = parameters["road_geometry"]["cross_slope_rad"]
+    theta = parameters["road_geometry"]["longitudinal_slope_percent"]
+    phi = parameters["road_geometry"]["cross_slope_percent"]
     r = parameters["road_geometry"]["radius_horizontal_m"]
     g = parameters["environment"]["gravitational_acceleration_m_s2"]
 
@@ -77,8 +77,8 @@ def compute_longitudinal_force(v, a_x, f_normal, parameters):
 
     m = parameters["vehicle_parameters"]["mass_kg"]
     g = parameters["environment"]["gravitational_acceleration_m_s2"]
-    theta = parameters["road_geometry"]["longitudinal_slope_rad"]
-    phi = parameters["road_geometry"]["cross_slope_rad"]
+    theta = parameters["road_geometry"]["longitudinal_slope_percent"]
+    phi = parameters["road_geometry"]["cross_slope_percent"]
     f_drag = compute_aerodynamic_drag(v, parameters)
     f_roll = compute_rolling_resistance(f_normal, parameters)
 
@@ -121,8 +121,8 @@ def compute_critical_speed(parameters):
     """
 
     g = parameters["environment"]["gravitational_acceleration_m_s2"]
-    theta = parameters["road_geometry"]["longitudinal_slope_rad"]
-    phi = parameters["road_geometry"]["cross_slope_rad"]
+    theta = parameters["road_geometry"]["longitudinal_slope_percent"]
+    phi = parameters["road_geometry"]["cross_slope_percent"]
     r = parameters["road_geometry"]["radius_horizontal_m"]
 
     v_crit = np.sqrt(g*r*np.tan(phi)/np.cos(theta))

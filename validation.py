@@ -20,30 +20,31 @@ def validate_parameters(parameters):
     time_span = parameters["simulation"]["time_span_s"]
     ini_speed = parameters["simulation"]["initial_speed_m_s"]
     lane_half_width = parameters["simulation"]["lane_half_width_m"]
-    long_slope = parameters["road_geometry"]["longitudinal_slope_rad"]
-    cross_slope = parameters["road_geometry"]["cross_slope_rad"]
+    long_slope = parameters["road_geometry"]["longitudinal_slope_percent"]
+    cross_slope = parameters["road_geometry"]["cross_slope_percent"]
+    commanded_accel = parameters["simulation"]["commanded_accel_m_s2"]
 
     if mass <= 0:
-        raise ValueError("Vehicle's mass cannot be a non-positive value!")
+        raise ValueError("Vehicle's mass must be a positive value!")
     if radius <= 0:
-        raise ValueError("Road's curve radius cannot be a non-positive value!")
+        raise ValueError("Road's curve radius must be a positive value!")
     for mu in mu_list:
         if mu <= 0 or mu > 1:
             raise ValueError(f"{mu} is not a valid value for μ!")
     if frontal_area <= 0:
-        raise ValueError("Vehicle's frontal area cannot be a non-positive value!")
+        raise ValueError("Vehicle's frontal area must be a positive value!")
     if drag_coeff < 0:
         raise ValueError("Vehicle's aerodynamic drag coefficient cannot be a negative value!")
     if rolling_resistance_coeff < 0:
         raise ValueError("Vehicle's tire resistance coefficient cannot be a negative value!")
     if air_density <= 0:
-        raise ValueError("Air density cannot be a negative value!")
+        raise ValueError("Air density must be a positive value!")
     if gravitational_accel <= 0:
-        raise ValueError("Gravitational acceleration cannot be a negative value!")
+        raise ValueError("Gravitational acceleration must be a positive value!")
     if highlight_mu not in mu_list:
         raise ValueError(f"{highlight_mu} must equal a value in mu_list")
-    if mu_simulation  <= 0:
-        raise ValueError("Friction coefficient used in simulation cannot be a non-positive value!")
+    if mu_simulation <= 0 or mu_simulation > 1:
+        raise ValueError("Friction coefficient used in simulation is invalid!")
     if speed_range[0] >= speed_range[1] or speed_range[0] < 0:
         raise ValueError("Invalid speed range!")
     if accel_range[0] >= accel_range[1]:
@@ -51,9 +52,17 @@ def validate_parameters(parameters):
     if time_span[1] <= time_span[0]:
         raise ValueError("Invalid time span!")
     if lane_half_width <= 0:
-        raise ValueError("Lane's half width in simulation cannot be a non-positive value!")
-    if -0.5 < long_slope < 0.5 and -0.5 < cross_slope < 0.5:
-        raise ValueError("Slope too steep!")
+        raise ValueError("Lane's half width in simulation must be a positive value!")
+    if abs(long_slope) > 1 or abs(cross_slope) > 1:
+        raise ValueError("Invalid value for slope angle!")
+    if abs(long_slope) > 0.2 or abs(cross_slope) > 0.2:
+        print("Slope is unusually steep, check your units")
+    if grid_res < 2:
+        raise ValueError("Resolution too low!")
+    if ini_speed < 0:
+        raise ValueError("Initial speed must not be a negative value!")
+    if commanded_accel > accel_range[1] or commanded_accel < accel_range[0]:
+        raise ValueError(f"{commanded_accel} is out of predetermined acceleration range!")
 
 
 
