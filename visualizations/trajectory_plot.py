@@ -18,6 +18,8 @@ def plot_trajectories(run_data, parameters):
         color = colors[i]
         ax.plot(df["x_coord_m"], df["y_coord_m"], color = color, linewidth = 2, label = labels)
         ax.plot(df["x_coord_m"].iloc[-1], df["y_coord_m"].iloc[-1], marker = "o", color = color)
+    ax.text(0.02, 0.95, "Inside of curve (+y)", transform = ax.transAxes)
+    ax.text(0.02, 0.73, "Outside of curve (-y)", transform = ax.transAxes)
     ax.axhline(y = 0, color = "black", linewidth = 1, label = "Lane centerline")
     ax.axhline(y = lane_half_width_m, color = "gray", linestyle = "--", label = "Lane edge")
     ax.axhline(y =-lane_half_width_m, color = "gray", linestyle = "--")

@@ -30,8 +30,8 @@ if __name__ == '__main__':
     for mu in mu_list:
         data = compute_safd(mu, parameters)
         safd_results.append(data)
-    inward_df = pd.read_csv(base_dir / "data" / "simulation_results.csv")
-    outward_df = pd.read_csv(base_dir / "data" / "simulation_results.csv")
+    inward_df = pd.read_csv(base_dir / "data" / "results_inward.csv")
+    outward_df = pd.read_csv(base_dir / "data" / "results_outward.csv")
     run_data = {"inward": inward_df, "outward": outward_df}
 
     print(f"Simulation complete. Results are exported to {output_path}")

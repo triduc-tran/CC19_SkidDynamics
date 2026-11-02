@@ -1,7 +1,7 @@
 {"road_geometry": {
     "radius_horizontal_m": 50,
-    "longitudinal_slope_rad": -0.04,
-    "cross_slope_rad": 0.04
+    "longitudinal_slope_percent": -0.04,
+    "cross_slope_percent": 0.04
 },
   "vehicle_parameters": {
     "mass_kg": 1550,
