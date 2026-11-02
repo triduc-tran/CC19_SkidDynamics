@@ -34,7 +34,7 @@ if __name__ == '__main__':
     parameters_outward = copy.deepcopy(parameters)
     parameters_outward["simulation"]["initial_speed_m_s"] = 2.5 * v_crit
     inward_df = run_simulation(a_x, parameters_inward)
-    outward_df = run_simulation(a_x, parameters_inward)
+    outward_df = run_simulation(a_x, parameters_outward)
     inward_df.to_csv(inward_output_path, index = False)
     outward_df.to_csv(outward_output_path, index=False)
     run_data = {"Inward skid (v < v_crit)": inward_df, "Outward skid (v > v_crit)": outward_df}
