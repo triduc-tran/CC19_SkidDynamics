@@ -8,6 +8,7 @@ from visualizations.trajectory_plot import plot_trajectories
 from validation import validate_parameters
 import copy
 from physics_model import compute_critical_speed
+from visualizations.energy_error_plot import plot_energy_error
 
 
 if __name__ == '__main__':
@@ -46,6 +47,8 @@ if __name__ == '__main__':
         safd_results.append(data)
 
     print(f"Simulation complete. Results are exported to {output_path}")
+    plot_energy_error(results_df, parameters)
+    print("Energy error plot successfully generated!")
     plot_trajectories(run_data, parameters)
     print("Trajectories plot successfully generated!")
     plot_safd(safd_results, parameters, mu_list)
