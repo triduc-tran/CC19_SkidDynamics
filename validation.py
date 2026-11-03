@@ -20,8 +20,8 @@ def validate_parameters(parameters):
     time_span = parameters["simulation"]["time_span_s"]
     ini_speed = parameters["simulation"]["initial_speed_m_s"]
     lane_half_width = parameters["simulation"]["lane_half_width_m"]
-    long_slope = parameters["road_geometry"]["longitudinal_slope_percent"]
-    cross_slope = parameters["road_geometry"]["cross_slope_percent"]
+    long_slope = parameters["road_geometry"]["longitudinal_slope_rad"]
+    cross_slope = parameters["road_geometry"]["cross_slope_rad"]
     commanded_accel = parameters["simulation"]["commanded_accel_m_s2"]
 
     if mass <= 0:
