@@ -85,16 +85,16 @@ def compute_longitudinal_force(v, a_x, f_normal, parameters):
 
     return f_x
 
-def required_friction(f_x, f_y, f_z):
+def required_friction(f_longitudinal, f_lateral, f_normal):
     """
     Compute the required friction coefficient to keep the vehicle from skidding
-    :param f_x: float - longitudinal net force (N)
-    :param f_y: float - lateral net force (N)
-    :param f_z: float - normal force (N)
+    :param f_longitudinal: float - longitudinal net force (N)
+    :param f_lateral: float - lateral net force (N)
+    :param f_normal: float - normal force (N)
     :return: mu_req
     """
 
-    mu_req = np.sqrt(f_x**2 + f_y**2)/f_z
+    mu_req = np.sqrt(f_longitudinal ** 2 + f_lateral ** 2) / f_normal
 
     return mu_req
 
